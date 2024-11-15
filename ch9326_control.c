@@ -9,9 +9,9 @@
 #define REQUEST_TYPE (LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE)
 #define HID_REPORT_SET 0x09
 #define HID_RT_OUTPUT 0x02
-#define REQUEST 0xC7 // 替换为你的请求码
-#define VALUE 0x83CC // 替换为你的值
-#define INDEX 0x10	 // 替换为你的索引
+#define REQUEST 0xC7 
+#define VALUE 0x83CC 
+#define INDEX 0x10	
 
 int main()
 {
