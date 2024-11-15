@@ -103,12 +103,20 @@ int main()
 			{
 				fprintf(stderr, "Failed to send control transfer: %s\n", libusb_error_name(r));
 			}
+			else
+			{
+				printf("Successfully sent control transfer! Bytes transferred: %d\n", r);
+			}
 
 			// 释放接口
 			r =	libusb_release_interface(handle, 0);
 			if (r != 0)
 			{
 				printf("Failed to release interface: %s\n", libusb_error_name(r));
+			}
+			else
+			{
+				printf("Successfully released interface\n");
 			}
 			r = libusb_attach_kernel_driver(handle, 0);
 			if (r != 0)
@@ -127,5 +135,6 @@ int main()
 	libusb_free_device_list(devs, 1);
 	libusb_exit(ctx);
 
+	printf("\nProgram completed successfully!\n");
 	return 0;
 }
