@@ -56,11 +56,12 @@ async function initializeDevice() {
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     // 设置清理函数
-    await interface.release();
-    interface.attachKernelDriver();
-    device.close();
-    console.log('设备已关闭');
-    process.exit();
+    interface.release(() => {
+      interface.attachKernelDriver();
+      device.close();
+      console.log('设备已关闭');
+      process.exit();
+    });
 
     return device;
 
