@@ -18,17 +18,19 @@ async function initializeDevice() {
     // 打开设备
     const device = new HID.HID(deviceInfo.path);
     
-    // 准备发送的数据(对应C代码中的m_str数组)
+    // 准备发送的数据(对应C代码中的数据结构)
     const data = Buffer.alloc(32); // 对应C代码中的buf
-    const controlData = Buffer.from([
-      0xFF,           // m_str[0]
-      0xC7,           // m_str[1] |= 0xC0
-      0x83,           // m_str[2]
-      0xCC,           // m_str[3]
-      30              // m_str[4]
-    ]);
-    
-    controlData.copy(data, 0, 0, 5);
+    const m_str = Buffer.alloc(5);
+
+    // 设置控制数据，完全匹配C代码的实现
+    m_str[0] = 0xFF;           // m_str[0] = 0xFF
+    m_str[1] = 0xC0;           // m_str[1] |= 0xC0
+    m_str[2] = 0x83;           // m_str[2] = 0x83
+    m_str[3] = 0xCC;           // m_str[3] = 0xCC
+    m_str[4] = 30;             // m_str[4] = 30
+
+    // 复制控制数据到发送缓冲区
+    m_str.copy(data, 0, 0, 5);
 
     // 发送数据
     device.write(data);
@@ -53,6 +55,7 @@ async function initializeDevice() {
 // 使用示例
 async function main() {
   try {
+    console.log('正在初始化设备...');
     const device = await initializeDevice();
     console.log('设备初始化成功');
     
