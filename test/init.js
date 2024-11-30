@@ -34,7 +34,7 @@ async function initializeDevice() {
     m_str[0] |= 0x01;
     m_str[1] &= ~0x08;
     m_str[1] |= 0x04;
-    m_str[1] |= 0x3;
+    m_str[1] |= 0x03;  // 修正:使用0x03而不是0x3
 
     m_str[0] = 0xFF;
     m_str[1] |= 0xC0;
@@ -53,14 +53,14 @@ async function initializeDevice() {
 
     console.log('设备初始化成功');
 
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     // 设置清理函数
-    process.on('SIGINT', () => {
-      interface.release(() => {
-        interface.attachKernelDriver();
-        device.close();
-        console.log('设备已关闭');
-        process.exit();
-      });
+    interface.release(() => {
+      interface.attachKernelDriver();
+      device.close();
+      console.log('设备已关闭');
+      process.exit();
     });
 
     return device;

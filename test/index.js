@@ -1,6 +1,10 @@
 const HID = require('node-hid');
 const readline = require('readline');
 
+
+const defaultVid = 6790;
+const defaultPid = 57360;
+
 // 创建命令行输入接口
 const rl = readline.createInterface({
     input: process.stdin,
@@ -72,7 +76,7 @@ async function main() {
     // 提示用户输入 VID
     const vidPromise = new Promise((resolve) => {
         rl.question('\n请输入设备的 VID (十进制): ', (answer) => {
-            resolve(parseInt(answer));
+            resolve(parseInt(answer) || defaultVid);
         });
     });
 
@@ -81,7 +85,7 @@ async function main() {
     // 提示用户输入 PID
     const pidPromise = new Promise((resolve) => {
         rl.question('请输入设备的 PID (十进制): ', (answer) => {
-            resolve(parseInt(answer));
+            resolve(parseInt(answer) || defaultPid);
         });
     });
 
