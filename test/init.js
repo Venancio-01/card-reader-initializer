@@ -53,7 +53,7 @@ async function initializeDevice() {
 
     console.log('设备初始化成功');
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     // 设置清理函数
     interface.release(() => {
